@@ -1,13 +1,11 @@
-#bin/bash
+#! /bin/bash
 
-echo "START"
-V0=`git rev-parse HEAD`
-
-while true
-do 
-  echo "numstat till now"
-  echo  `git diff --numstat $V0`
-  V0=`git rev-parse HEAD`
-  sleep 10
-done
-
+if [ -z $SPRIT_COMMIT_HASH ]; then
+  echo "REGIST START COMMIT HASH"
+  export SPRIT_COMMIT_HASH=`git rev-parse HEAD`
+  echo $SPRIT_COMMIT_HASH
+else
+  echo "git diff --stat from last runnig on"
+  echo `git diff --stat $SPRIT_COMMIT_HASH`
+  export SPRIT_COMMIT_HASH=`git rev-parse HEAD`
+fi
